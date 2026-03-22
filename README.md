@@ -153,6 +153,10 @@ oh-my-posh init bash --config ~/dotfiles/oh-my-posh/posh-wsl.omp.json >> ~/.bash
 | Time | Thời gian hiện tại |
 | Battery | (WSL) Phần trăm pin |
 
+**Themes:**
+- `posh-macos.omp.json` / `posh-wsl.omp.json` - Theme đầy đủ (cần Nerd Font)
+- `posh-macos-simple.omp.json` - Theme đơn giản (emoji Unicode, không cần Nerd Font)
+
 ## ⌨️ Key Bindings
 
 ### Tmux
@@ -211,7 +215,30 @@ oh-my-posh init bash --config ~/dotfiles/oh-my-posh/posh-wsl.omp.json >> ~/.bash
 
 ### Oh My Posh
 
-**Theme không hiển thị đúng**
+**Theme không hiển thị đúng icon (hiện dấu hỏi ???):**
+
+Do thiếu Nerd Font. Có 2 cách fix:
+
+**Cách 1: Cài Nerd Font (khuyến nghị)**
+```bash
+# macOS - dùng Homebrew
+brew install --cask font-jetbrains-mono-nerd-font
+
+# Sau đó trong terminal (iTerm2/Terminal.app):
+# Preferences > Profiles > Text > Non-ASCII Font
+# Chọn "JetBrainsMono Nerd Font"
+```
+
+**Cách 2: Dùng theme đơn giản (không cần font đặc biệt)**
+```bash
+# macOS
+oh-my-posh init zsh --config ~/dotfiles/oh-my-posh/posh-macos-simple.omp.json >> ~/.zshrc
+
+# WSL/Ubuntu  
+oh-my-posh init bash --config ~/dotfiles/oh-my-posh/posh-wsl.omp.json >> ~/.bashrc
+```
+
+**Theme không load:**
 - Kiểm tra đường dẫn config file
 - Restart terminal
 

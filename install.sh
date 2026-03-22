@@ -160,6 +160,10 @@ install_oh_my_posh() {
     setup_shell_config
     
     log_success "Oh My Posh configuration installed"
+    log_info "Themes installed:"
+    log_info "  - posh-macos.omp.json (full, requires Nerd Font)"
+    log_info "  - posh-macos-simple.omp.json (simple, emoji-based)"
+    log_info "  - posh-wsl.omp.json (for WSL)"
 }
 
 # Setup shell configuration
@@ -167,8 +171,9 @@ setup_shell_config() {
     local shell_config
     local posh_config
     
+    # Use simple theme by default (emoji-based, no Nerd Font required)
     if [[ "$OS" == "macos" ]]; then
-        posh_config="$DOTFILES_DIR/oh-my-posh/posh-macos.omp.json"
+        posh_config="$DOTFILES_DIR/oh-my-posh/posh-macos-simple.omp.json"
     else
         posh_config="$DOTFILES_DIR/oh-my-posh/posh-wsl.omp.json"
     fi
@@ -181,6 +186,9 @@ setup_shell_config() {
         shell_config="$HOME/.bashrc"
         setup_bash "$shell_config" "$posh_config"
     fi
+    
+    log_info "To use full theme (requires Nerd Font), change config to:"
+    log_info "  posh-macos.omp.json (macOS)"
 }
 
 # Setup Zsh configuration

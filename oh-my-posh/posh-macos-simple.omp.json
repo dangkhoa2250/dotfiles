@@ -14,7 +14,7 @@
           "template": "[{{ if .WSL }}WSL/{{ end }}{{ .Icon }}] ",
           "foreground": "#61AFEF",
           "properties": {
-            "windows": "🪟"
+            "macos": ""
           }
         },
         {
@@ -26,8 +26,7 @@
             "style": "folder",
             "home_icon": "~",
             "folder_icon": "📁",
-            "folder_separator_icon": "/",
-            "max_depth": 3
+            "folder_separator_icon": "/"
           }
         },
         {
@@ -37,10 +36,7 @@
           "foreground": "#98C379",
           "properties": {
             "branch_icon": "🌿 ",
-            "fetch_status": true,
-            "untracked_modes": {
-              "/": "no"
-            }
+            "fetch_status": true
           }
         },
         {
@@ -59,22 +55,16 @@
       "alignment": "right",
       "segments": [
         {
-          "type": "battery",
-          "style": "plain",
-          "template": "{{ if .Error }}{{ .Error }}{{ else }}{{ if eq .State \"Charging\" }}🔌{{ else }}🔋{{ end }} {{ .Percentage }}% {{ end }}",
-          "foreground": "#5C6BC0"
-        },
-        {
           "type": "node",
           "style": "plain",
           "template": "🟦 {{ .Full }} ",
-          "foreground": "#42A5F5"
+          "foreground": "#5C6BC0"
         },
         {
           "type": "go",
           "style": "plain",
           "template": "🐹 {{ .Full }} ",
-          "foreground": "#98C379"
+          "foreground": "#42A5F5"
         },
         {
           "type": "python",
@@ -93,12 +83,6 @@
           "style": "plain",
           "template": "☕ {{ .Full }} ",
           "foreground": "#E53935"
-        },
-        {
-          "type": "dotnet",
-          "style": "plain",
-          "template": "🟦 {{ .Full }} ",
-          "foreground": "#6A9955"
         },
         {
           "type": "time",

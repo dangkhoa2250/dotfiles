@@ -11,7 +11,7 @@
         {
           "type": "os",
           "style": "diamond",
-          "leading_diamond": "",
+          "leading_diamond": "\ue0b6",
           "trailing_diamond": "",
           "template": " {{ if .WSL }}WSL/{{ end }}{{ .Icon }} ",
           "foreground": "#ffffff",
@@ -23,27 +23,27 @@
         {
           "type": "path",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": "  {{ .Path }} ",
+          "powerline_symbol": "\ue0b0",
+          "template": " \ue5ff {{ .Path }} ",
           "foreground": "#ffffff",
           "background": "#C678DD",
           "properties": {
             "style": "folder",
-            "home_icon": "",
-            "folder_icon": "",
-            "folder_separator_icon": "  "
+            "home_icon": "~",
+            "folder_icon": "\uea83",
+            "folder_separator_icon": " / "
           }
         },
         {
           "type": "git",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ if .Staging }}  {{ .Staging }}{{ end }}{{ if .Working }}  {{ .Working }}{{ end }} ",
+          "powerline_symbol": "\ue0b0",
+          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{ if .Staging }} +{{ .Staging }}{{ end }}{{ if .Working }} ~{{ .Working }}{{ end }} ",
           "foreground": "#ffffff",
           "background": "#98C379",
           "properties": {
-            "branch_icon": " ",
-            "commit_icon": " ",
+            "branch_icon": "\ue725 ",
+            "commit_icon": "\ue713 ",
             "fetch_status": true,
             "fetch_upstream_icon": true
           }
@@ -51,16 +51,16 @@
         {
           "type": "root",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": "  ",
+          "powerline_symbol": "\ue0b0",
+          "template": " # ",
           "foreground": "#ffffff",
           "background": "#E06C75"
         },
         {
           "type": "exit",
           "style": "diamond",
-          "trailing_diamond": "",
-          "template": " {{ if ne .Code 0 }} {{ .Code }}{{ else }}{{ end }} ",
+          "trailing_diamond": "\ue0b4",
+          "template": " {{ if ne .Code 0 }}X {{ .Code }}{{ else }}\u2713{{ end }} ",
           "foreground": "#ffffff",
           "background": "#D19A66",
           "properties": {
@@ -76,9 +76,9 @@
         {
           "type": "node",
           "style": "diamond",
-          "leading_diamond": "",
+          "leading_diamond": "\ue0b6",
           "trailing_diamond": "",
-          "template": "  {{ .Full }} ",
+          "template": " \ue718 {{ .Full }} ",
           "foreground": "#ffffff",
           "background": "#5C6BC0",
           "properties": {
@@ -88,40 +88,40 @@
         {
           "type": "go",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": "  {{ .Full }} ",
+          "powerline_symbol": "\ue0b0",
+          "template": " \ue626 {{ .Full }} ",
           "foreground": "#ffffff",
           "background": "#42A5F5"
         },
         {
           "type": "python",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": "  {{ .Full }}{{ if .Venv }} ({{ .Venv }}){{ end }} ",
+          "powerline_symbol": "\ue0b0",
+          "template": " \ue235 {{ .Full }}{{ if .Venv }} ({{ .Venv }}){{ end }} ",
           "foreground": "#ffffff",
           "background": "#FFCB6B"
         },
         {
           "type": "rust",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": "  {{ .Full }} ",
+          "powerline_symbol": "\ue0b0",
+          "template": " \ue7a8 {{ .Full }} ",
           "foreground": "#ffffff",
           "background": "#DE6E38"
         },
         {
           "type": "java",
           "style": "powerline",
-          "powerline_symbol": "",
-          "template": "  {{ .Full }} ",
+          "powerline_symbol": "\ue0b0",
+          "template": " \ue738 {{ .Full }} ",
           "foreground": "#ffffff",
           "background": "#E53935"
         },
         {
           "type": "time",
           "style": "diamond",
-          "trailing_diamond": "",
-          "template": "  {{ .CurrentDate | date .Format }} ",
+          "trailing_diamond": "\ue0b4",
+          "template": " \uf017 {{ .CurrentDate | date .Format }} ",
           "foreground": "#ffffff",
           "background": "#56B6C2",
           "properties": {
@@ -138,7 +138,7 @@
         {
           "type": "text",
           "style": "plain",
-          "template": "❯",
+          "template": "\u276f",
           "foreground": "#61AFEF"
         }
       ]

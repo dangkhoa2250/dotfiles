@@ -1,0 +1,41 @@
+# Lazy.nvim
+lazy-lock.json
+
+# Packer (old plugin manager)
+plugin/packer_compiled.lua
+
+# Neovim data
+data/
+state/
+site/
+
+# Backup files
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+
+# Undofiles (optional - uncomment if you don't want to track)
+# .vim/undodir/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Logs
+*.log
+
+# Local config overrides (for personal machine-specific settings)
+local.lua
+*.local.lua
+
+# Temporary files
+tmp/
+temp/
+*.tmp

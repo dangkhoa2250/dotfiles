@@ -10,20 +10,54 @@ local mux = wezterm.mux
 local config = wezterm.config_builder()
 
 -- =============================================
+-- Platform Detection
+-- =============================================
+
+local is_windows = wezterm.target_triple:find 'windows' ~= nil
+local is_macos = wezterm.target_triple:find 'darwin' ~= nil
+local is_linux = wezterm.target_triple:find 'linux' ~= nil
+
+-- =============================================
 -- Appearance
 -- =============================================
 
 -- Color scheme
 config.color_scheme = 'Catppuccin Mocha'
 
--- Font configuration
-config.font = wezterm.font 'JetBrainsMono Nerd Font'
-config.font_size = 13.0
+-- Font configuration with fallbacks
+local font_name = 'JetBrainsMono Nerd Font'
+local font_size = 13.0
+
+-- Check if Nerd Font is available, fallback to system fonts
+config.font = wezterm.font_with_fallback {
+  font_name,
+  'JetBrains Mono',
+  'Fira Code',
+  'SF Mono',
+  'Menlo',
+  'Monaco',
+  'Courier New',
+}
+
+config.font_size = font_size
 
 -- Window appearance
-config.window_background_opacity = 0.92
-config.macos_window_background_blur = 20
-config.window_decorations = 'RESIZE'
+if is_macos then
+  config.window_background_opacity = 0.92
+  config.macos_window_background_blur = 20
+  config.window_decorations = 'RESIZE'
+  config.window_frame = {
+    font = wezterm.font {
+      family = font_name,
+      weight = 'Bold',
+    },
+    font_size = font_size,
+  }
+else
+  config.window_background_opacity = 0.95
+  config.window_decorations = 'TITLE | RESIZE'
+end
+
 config.window_close_confirmation = 'NeverPrompt'
 
 -- Window size
@@ -152,8 +186,8 @@ config.keys = {
 }
 
 -- Platform-specific key bindings
-if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-  -- Windows: Copy to clipboard
+if is_windows then
+  -- Windows: Copy to clipboard with Ctrl+Shift
   table.insert(config.keys, {
     key = 'c',
     mods = 'CTRL|SHIFT',
@@ -164,8 +198,8 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     mods = 'CTRL|SHIFT',
     action = act.PasteFromClipboard,
   })
-elseif wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 'x86_64-apple-darwin' then
-  -- macOS: Use command key
+elseif is_macos then
+  -- macOS: Use Command key for copy/paste
   table.insert(config.keys, {
     key = 'c',
     mods = 'CMD',
@@ -174,25 +208,28 @@ elseif wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple 
   table.insert(config.keys, {
     key = 'v',
     mods = 'CMD',
+    action = act.PasteFromClipboard,
+  })
+  -- Also support Cmd+Shift+C/V
+  table.insert(config.keys, {
+    key = 'c',
+    mods = 'CMD|SHIFT',
+    action = act.CopyToClipboard { selection = 'Clipboard' },
+  })
+  table.insert(config.keys, {
+    key = 'v',
+    mods = 'CMD|SHIFT',
     action = act.PasteFromClipboard,
   })
 end
 
 -- =============================================
--- Environment Detection
--- =============================================
-
--- Detect if running on Windows or macOS
-local is_windows = wezterm.target_triple:find 'windows'
-local is_macos = wezterm.target_triple:find 'darwin'
-
--- =============================================
--- Launch Menu (Windows - WSL)
+-- Launch Menu (Windows - WSL only)
 -- =============================================
 
 if is_windows then
   config.default_domain = 'WSL:Ubuntu'
-  
+
   config.domains = {
     wezterm.domain {
       name = 'WSL:Ubuntu',
@@ -200,7 +237,7 @@ if is_windows then
       distribution = 'Ubuntu',
     },
   }
-  
+
   config.launch_menu = {
     {
       label = 'WSL: Ubuntu',
@@ -222,6 +259,14 @@ end
 -- =============================================
 
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
+
+-- =============================================
+-- Error handling for config reload
+-- =============================================
+
+wezterm.on('reload-config', function()
+  wezterm.log_info 'Reloading configuration...'
+end)
 
 -- =============================================
 -- Return config

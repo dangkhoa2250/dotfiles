@@ -1,255 +1,125 @@
 # Dotfiles
 
-Bộ cấu hình dotfiles cho tmux, WezTerm, và Oh My Posh với support đa nền tảng (Windows/WSL/macOS).
+My personal configuration for various development tools and terminal applications.
 
-## 📦 Mục lục
+## 🎯 Purpose
 
-- [Cấu trúc](#-cấu-trúc)
-- [Yêu cầu](#-yêu-cầu)
-- [Cài đặt](#-cài-đặt)
-- [Cấu hình chi tiết](#-cấu-hình-chi-tiết)
-- [Key Bindings](#-key-bindings)
+This repository contains all my configuration files for setting up a productive development environment across multiple machines (macOS, Linux, WSL).
 
-## 📁 Cấu trúc
+## 📦 Applications
 
-```
-dotfiles/
-├── tmux/
-│   └── .tmux.conf          # Tmux configuration
-├── wezterm/
-│   └── wezterm.lua         # WezTerm configuration
-├── oh-my-posh/
-│   ├── posh-macos.omp.json # Oh My Posh theme for macOS
-│   └── posh-wsl.omp.json   # Oh My Posh theme for WSL
-├── install.sh              # Installation script (macOS/WSL)
-├── install.ps1             # Installation script (Windows)
-└── README.md
-```
+| Application | Description | Config Path |
+|-------------|-------------|-------------|
+| **Neovim** | Modern text editor with LSP support | [`nvim/`](./nvim/) |
+| **Tmux** | Terminal multiplexer | [`tmux/`](./tmux/) |
+| **WezTerm** | GPU-accelerated terminal emulator | [`wezterm/`](./wezterm/) |
+| **Oh My Posh** | Cross-platform prompt theme engine | [`oh-my-posh/`](./oh-my-posh/) |
 
-## 🛠 Yêu cầu
+## 🚀 Quick Start
 
-### Tất cả nền tảng
-- Git
-
-### macOS
-- Homebrew
-- tmux (`brew install tmux`)
-- WezTerm (`brew install --cask wezterm`)
-- Oh My Posh (`brew install jandedobbeleer/oh-my-posh/oh-my-posh`)
-- JetBrains Mono Nerd Font (`brew install --cask font-jetbrains-mono-nerd-font`)
-
-### WSL (Ubuntu)
-- tmux (`sudo apt install tmux`)
-- WezTerm (tải từ https://wezfurlong.org/wezterm/install/linux.html)
-- Oh My Posh (`curl -s https://ohmyposh.dev/install.sh | bash -s`)
-- JetBrains Mono Nerd Font (tải từ https://www.nerdfonts.com/)
-
-### Windows (PowerShell)
-- WezTerm (tải từ https://wezfurlong.org/wezterm/install/windows.html)
-- Oh My Posh (`winget install --id JanDeDobbeleer.OhMyPosh -e`)
-
-## 🚀 Cài đặt
-
-### macOS / WSL (Ubuntu)
+### Clone & Install
 
 ```bash
-# Clone repository
-git clone https://github.com/YOUR_USERNAME/dotfiles.git
-cd dotfiles
+# Clone the repository
+git clone git@github.com:dangkhoa2250/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 
-# Chạy script cài đặt
-chmod +x install.sh
+# Run the installer
 ./install.sh
 ```
 
-Sau đó chọn option **5** để cài đặt tất cả.
-
-### Windows (PowerShell)
-
-```powershell
-# Clone repository
-git clone https://github.com/YOUR_USERNAME/dotfiles.git
-cd dotfiles
-
-# Chạy script cài đặt
-.\install.ps1
-```
-
-> ⚠️ **Lưu ý**: Nếu gặp lỗi khi tạo symlink, chạy PowerShell với quyền Administrator hoặc enable Developer Mode.
-
-### Cài đặt thủ công
-
-#### Tmux
+### Install Specific Application
 
 ```bash
-# Symlink config
-ln -sf ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
+# Install only Neovim config
+./install.sh nvim
 
-# Install TPM
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Install only Tmux config
+./install.sh tmux
 
-# Reload tmux
-tmux kill-server
-tmux
+# Install only WezTerm config
+./install.sh wezterm
 ```
 
-#### WezTerm
+## 📁 Structure
 
-```bash
-# macOS
-mkdir -p ~/.config/wezterm
-ln -sf ~/dotfiles/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua
-
-# WSL/Ubuntu
-mkdir -p ~/.config/wezterm
-ln -sf ~/dotfiles/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua
-
-# Windows (PowerShell)
-# Tự động copy khi chạy install.ps1
+```
+dotfiles/
+├── nvim/              # Neovim configuration
+│   ├── init.lua
+│   ├── lua/
+│   ├── install.sh
+│   └── README.md
+├── tmux/              # Tmux configuration
+│   ├── .tmux.conf
+│   └── README.md
+├── wezterm/           # WezTerm configuration
+│   ├── wezterm.lua
+│   └── README.md
+├── oh-my-posh/        # Oh My Posh themes
+│   ├── posh-macos.omp.json
+│   ├── posh-wsl.omp.json
+│   └── README.md
+├── install.sh         # Main installation script
+└── README.md          # This file
 ```
 
-#### Oh My Posh
+## 🖥️ Supported Platforms
 
-```bash
-# macOS
-oh-my-posh init zsh --config ~/dotfiles/oh-my-posh/posh-macos.omp.json >> ~/.zshrc
+- **macOS** (Sonoma+)
+- **Linux** (Ubuntu, Fedora, Arch)
+- **WSL2** (Windows Subsystem for Linux)
 
-# WSL/Ubuntu
-oh-my-posh init bash --config ~/dotfiles/oh-my-posh/posh-wsl.omp.json >> ~/.bashrc
-```
+## 🎨 Features
 
-## ⚙️ Cấu hình chi tiết
+### Neovim
+- Rose Pine theme with transparency
+- Full LSP support (TypeScript, Lua, Rust, Python)
+- Telescope for fuzzy finding
+- Harpoon for quick file navigation
+- Which-Key for keybinding hints
 
 ### Tmux
-
-| Tính năng | Mô tả |
-|-----------|-------|
-| Prefix | `Ctrl+a` |
-| Mouse support | Bật |
-| History limit | 50000 |
-| Vi mode | Bật |
-| TPM | Đã tích hợp |
+- Custom status bar
+- Easy pane navigation
+- Session management
 
 ### WezTerm
-
-| Tính năng | Mô tả |
-|-----------|-------|
-| Color scheme | Catppuccin Mocha |
-| Font | JetBrainsMono Nerd Font |
-| Font size | 13 |
-| Opacity | 92% |
-| Tab bar | Bật |
+- GPU acceleration
+- Ligature support
+- Rose Pine colorscheme
+- Transparency
 
 ### Oh My Posh
+- Beautiful prompt themes
+- Git status indicators
+- Cross-platform consistency
 
-| Segment | Mô tả |
-|---------|-------|
-| OS | Hiển thị icon OS + WSL indicator |
-| Path | Thư mục hiện tại |
-| Git | Branch, status, staging/working changes |
-| Root | Indicator khi chạy bằng root |
-| Exit code | Hiển thị exit code |
-| Node/Go/Python/Rust/Java | Version của runtime |
-| Time | Thời gian hiện tại |
-| Battery | (WSL) Phần trăm pin |
+## 🔧 Requirements
 
-**Themes:**
-- `posh-macos.omp.json` / `posh-wsl.omp.json` - Theme đầy đủ (cần Nerd Font)
-- `posh-macos-simple.omp.json` - Theme đơn giản (emoji Unicode, không cần Nerd Font)
+- **Neovim** 0.10+
+- **Tmux** 3.0+
+- **WezTerm** (latest)
+- **Oh My Posh** (latest)
+- **Nerd Font** (JetBrainsMono recommended)
 
-## ⌨️ Key Bindings
+## 📝 Setup Guides
 
-### Tmux
+Each application has its own README with detailed setup instructions:
 
-| Phím | Mô tả |
-|------|-------|
-| `Prefix` | `Ctrl+a` |
-| `Prefix |` | Split vertical |
-| `Prefix -` | Split horizontal |
-| `Prefix h/j/k/l` | Di chuyển giữa các panes |
-| `Prefix [number]` | Chuyển đến window |
-| `Prefix c` | Tạo window mới |
-| `Prefix r` | Reload config |
-| `Prefix z` | Zoom pane |
+- [Neovim Setup](./nvim/README.md)
+- [Tmux Setup](./tmux/README.md)
+- [WezTerm Setup](./wezterm/README.md)
+- [Oh My Posh Setup](./oh-my-posh/README.md)
 
-### WezTerm
+## 🔄 Updates
 
-| Phím | Mô tả |
-|------|-------|
-| `Leader` | `Ctrl+a` |
-| `Leader \|` | Split vertical |
-| `Leader -` | Split horizontal |
-| `Leader h/j/k/l` | Di chuyển giữa các panes |
-| `Leader [number]` | Chuyển đến tab |
-| `Leader c` | Tạo tab mới |
-| `Leader r` | Reload config |
-| `Leader z` | Zoom pane |
-| `Ctrl+Shift+C/V` | Copy/Paste (Windows) |
-| `Cmd+C/V` | Copy/Paste (macOS) |
-
-## 🎨 Themes
-
-### Oh My Posh
-
-- **macOS**: `posh-macos.omp.json` - Tối ưu cho macOS với hiển thị OS icon
-- **WSL**: `posh-wsl.omp.json` - Tối ưu cho WSL với battery indicator
-
-## 🔧 Troubleshooting
-
-### Tmux
-
-**Lỗi: "unknown option: -c"**
-- Update tmux lên version mới nhất
-
-**TPM plugins không load**
-- Nhấn `Prefix + I` để install plugins
-
-### WezTerm
-
-**Lỗi font chữ**
-- Cài đặt JetBrains Mono Nerd Font
-- Restart WezTerm
-
-**Lua error**
-- Kiểm tra syntax: `wezterm cli reload`
-
-### Oh My Posh
-
-**Theme không hiển thị đúng icon (hiện dấu hỏi ???):**
-
-Do thiếu Nerd Font. Có 2 cách fix:
-
-**Cách 1: Cài Nerd Font (khuyến nghị)**
 ```bash
-# macOS - dùng Homebrew
-brew install --cask font-jetbrains-mono-nerd-font
-
-# Sau đó trong terminal (iTerm2/Terminal.app):
-# Preferences > Profiles > Text > Non-ASCII Font
-# Chọn "JetBrainsMono Nerd Font"
+cd ~/.dotfiles
+git pull
+./install.sh
 ```
 
-**Cách 2: Dùng theme đơn giản (không cần font đặc biệt)**
-```bash
-# macOS
-oh-my-posh init zsh --config ~/dotfiles/oh-my-posh/posh-macos-simple.omp.json >> ~/.zshrc
+## 📄 License
 
-# WSL/Ubuntu  
-oh-my-posh init bash --config ~/dotfiles/oh-my-posh/posh-wsl.omp.json >> ~/.bashrc
-```
-
-**Theme không load:**
-- Kiểm tra đường dẫn config file
-- Restart terminal
-
-## 📝 License
-
-MIT License
-
-## 🙏 Credits
-
-- [Tmux](https://github.com/tmux/tmux)
-- [WezTerm](https://github.com/wez/wezterm)
-- [Oh My Posh](https://github.com/JanDeDobbeleer/oh-my-posh)
-- [Catppuccin](https://github.com/catppuccin/catppuccin)
-- [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+MIT

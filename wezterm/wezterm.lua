@@ -45,13 +45,12 @@ config.font_size = font_size
 if is_macos then
   config.window_background_opacity = 0.92
   config.macos_window_background_blur = 20
-  config.window_decorations = 'RESIZE'
-  config.window_frame = {
-    font = wezterm.font {
-      family = font_name,
-      weight = 'Bold',
-    },
-    font_size = font_size,
+  config.window_decorations = 'NONE'
+  config.window_padding = {
+    left = 8,
+    right = 8,
+    top = 20,  -- Extra padding at top since no title bar
+    bottom = 8,
   }
 else
   config.window_background_opacity = 0.95
@@ -63,14 +62,6 @@ config.window_close_confirmation = 'NeverPrompt'
 -- Window size
 config.initial_cols = 120
 config.initial_rows = 35
-
--- Padding
-config.window_padding = {
-  left = 8,
-  right = 8,
-  top = 8,
-  bottom = 8,
-}
 
 -- Cursor
 config.default_cursor_style = 'BlinkingBlock'

@@ -109,7 +109,8 @@ config.selection_word_boundary = ' \t\n{}[]()""\'`,;│=+'
 
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 
-config.keys = {
+-- Build keys table based on platform
+local keys = {
   -- Split panes
   {
     key = '|',
@@ -153,16 +154,16 @@ config.keys = {
   -- Tabs
   { key = 'c', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
   { key = 'w', mods = 'LEADER', action = act.CloseCurrentTab { confirm = false } },
-  { key = '1', mods = 'LEADER', action = act.ActivateTab 0 },
-  { key = '2', mods = 'LEADER', action = act.ActivateTab 1 },
-  { key = '3', mods = 'LEADER', action = act.ActivateTab 2 },
-  { key = '4', mods = 'LEADER', action = act.ActivateTab 3 },
-  { key = '5', mods = 'LEADER', action = act.ActivateTab 4 },
-  { key = '6', mods = 'LEADER', action = act.ActivateTab 5 },
-  { key = '7', mods = 'LEADER', action = act.ActivateTab 6 },
-  { key = '8', mods = 'LEADER', action = act.ActivateTab 7 },
-  { key = '9', mods = 'LEADER', action = act.ActivateTab 8 },
-  { key = '0', mods = 'LEADER', action = act.ActivateTab 9 },
+  { key = '1', mods = 'LEADER', action = act.ActivateTab(0) },
+  { key = '2', mods = 'LEADER', action = act.ActivateTab(1) },
+  { key = '3', mods = 'LEADER', action = act.ActivateTab(2) },
+  { key = '4', mods = 'LEADER', action = act.ActivateTab(3) },
+  { key = '5', mods = 'LEADER', action = act.ActivateTab(4) },
+  { key = '6', mods = 'LEADER', action = act.ActivateTab(5) },
+  { key = '7', mods = 'LEADER', action = act.ActivateTab(6) },
+  { key = '8', mods = 'LEADER', action = act.ActivateTab(7) },
+  { key = '9', mods = 'LEADER', action = act.ActivateTab(8) },
+  { key = '0', mods = 'LEADER', action = act.ActivateTab(9) },
 
   -- Zoom pane
   { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
@@ -188,40 +189,42 @@ config.keys = {
 -- Platform-specific key bindings
 if is_windows then
   -- Windows: Copy to clipboard with Ctrl+Shift
-  table.insert(config.keys, {
+  table.insert(keys, {
     key = 'c',
     mods = 'CTRL|SHIFT',
     action = act.CopyToClipboard { selection = 'Clipboard' },
   })
-  table.insert(config.keys, {
+  table.insert(keys, {
     key = 'v',
     mods = 'CTRL|SHIFT',
     action = act.PasteFromClipboard,
   })
 elseif is_macos then
   -- macOS: Use Command key for copy/paste
-  table.insert(config.keys, {
+  table.insert(keys, {
     key = 'c',
     mods = 'CMD',
     action = act.CopyToClipboard { selection = 'Clipboard' },
   })
-  table.insert(config.keys, {
+  table.insert(keys, {
     key = 'v',
     mods = 'CMD',
     action = act.PasteFromClipboard,
   })
   -- Also support Cmd+Shift+C/V
-  table.insert(config.keys, {
+  table.insert(keys, {
     key = 'c',
     mods = 'CMD|SHIFT',
     action = act.CopyToClipboard { selection = 'Clipboard' },
   })
-  table.insert(config.keys, {
+  table.insert(keys, {
     key = 'v',
     mods = 'CMD|SHIFT',
     action = act.PasteFromClipboard,
   })
 end
+
+config.keys = keys
 
 -- =============================================
 -- Launch Menu (Windows - WSL only)
@@ -259,14 +262,6 @@ end
 -- =============================================
 
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
-
--- =============================================
--- Error handling for config reload
--- =============================================
-
-wezterm.on('reload-config', function()
-  wezterm.log_info 'Reloading configuration...'
-end)
 
 -- =============================================
 -- Return config

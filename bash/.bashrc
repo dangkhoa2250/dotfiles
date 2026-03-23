@@ -124,6 +124,16 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 set -o vi
 
+# Add ~/bin to PATH (MUST be before oh-my-posh)
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# Source local env (for uv, uvx and other user binaries)
+if [ -f ~/.local/bin/env ]; then
+    . ~/.local/bin/env
+fi
+
 # Prompt - cross-platform
 case "$(uname -s)" in
   Linux*)

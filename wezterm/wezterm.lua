@@ -1,10 +1,10 @@
 local wezterm = require 'wezterm'
 
 local function get_default_prog()
-  local sys = wezterm.system_detail()
-  if sys.os_name == 'macOS' then
+  local target = wezterm.target_triple()
+  if target:find("apple") then
     return nil -- Use default shell on macOS
-  elseif sys.os_name == 'Windows' then
+  elseif target:find("windows") then
     return { 'wsl.exe', '-d', 'Ubuntu' }
   else
     return nil -- Linux/WSL - use default shell

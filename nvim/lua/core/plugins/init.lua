@@ -2,24 +2,21 @@
 return {
   -- UI & Colorscheme
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      require("rose-pine").setup({
-        disable_background = true,  -- Enable transparency
-        disable_float_background = true,
+      require("tokyonight").setup({
+        style = "night",
+        transparent = true,
         styles = {
-          bold = true,
-          italic = true,
-          transparency = true,
+          sidebars = "transparent",
+          floats = "transparent",
         },
       })
-      vim.cmd("colorscheme rose-pine")
-      -- Set black transparent background
-      vim.api.nvim_set_hl(0, "Normal", { bg = "#050505", default = true })
-      vim.api.nvim_set_hl(0, "NormalNC", { bg = "#050505", default = true })
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#050505", default = true })
+      vim.cmd("colorscheme tokyonight")
+      -- Set Visual highlight color
+      vim.api.nvim_set_hl(0, "Visual", { bg = "#1a5f7a", fg = "#ffffff" })
     end,
   },
 
@@ -58,25 +55,49 @@ return {
       { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
     },
     config = function()
-      require("telescope").setup({
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
+
+      telescope.setup({
         defaults = {
           preview = {
             treesitter = false,
           },
           file_ignore_patterns = {},
           path_display = { "smart" },
+          layout_strategy = "horizontal",
+          layout_config = {
+            horizontal = {
+              preview_width = 0.55,
+              width = function(_, max_columns, _)
+                return math.min(max_columns, 120)
+              end,
+              height = function(_, _, max_lines)
+                return math.min(max_lines, 30)
+              end,
+            },
+          },
+          winblend = 0,
+          mappings = {
+            i = {
+              ["<C-p>"] = actions.toggle_preview,
+            },
+            n = {
+              ["p"] = actions.toggle_preview,
+            },
+          },
         },
       })
     end,
   },
 
-  -- Tagbar
+  -- Tagbar - Fastest symbol navigation (uses ctags)
   {
     "preservim/tagbar",
     cmd = "TagbarToggle",
     keys = {
       {
-        "<leader>t",
+        "<leader>s",
         function()
           vim.cmd("TagbarToggle")
         end,
@@ -84,7 +105,14 @@ return {
       },
     },
     init = function()
-      vim.g.tagbar_ctags_bin = "/usr/bin/ctags"
+      -- Cross-platform ctags path
+      local ctags_path = "/usr/bin/ctags"
+      if vim.fn.has("mac") == 1 then
+        ctags_path = "/opt/homebrew/bin/ctags"  -- macOS ARM
+      elseif vim.fn.has("macunix") == 1 then
+        ctags_path = "/usr/local/bin/ctags"    -- macOS Intel
+      end
+      vim.g.tagbar_ctags_bin = ctags_path
       vim.g.tagbar_usearrows = 1
       vim.g.tagbar_autoshowtag = 0
       vim.g.tagbar_autofocus = 1
@@ -304,7 +332,7 @@ return {
         stages = "fade_in_slide_out",
         top_down = false,
         timeout = 3000,
-        level = vim.log.levels.WARN, -- Only show WARN and ERROR
+        level = vim.log.levels.INFO, -- Show INFO, WARN, ERROR
       })
 
       -- Set highlight colors for notify

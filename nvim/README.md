@@ -4,7 +4,7 @@ A modern, cross-platform Neovim configuration built with Lua and Lazy.nvim.
 
 ## ✨ Features
 
-- **🎨 Beautiful UI**: Rose Pine theme with transparency support
+- **🎨 Beautiful UI**: TokyoNight theme with transparency support
 - **⚡ Fast**: Lazy.nvim for optimized plugin loading
 - **🔧 Full LSP Support**: Autocomplete, go-to-definition, diagnostics
 - **📦 Smart Completion**: nvim-cmp with icons
@@ -110,13 +110,13 @@ Edit `lua/core/plugins/init.lua`:
 
 ```lua
 {
-  "rose-pine/neovim",
-  name = "rose-pine",
+  "folke/tokyonight.nvim",
   config = function()
-    require("rose-pine").setup({
-      variant = "moon",  -- Options: auto, main, moon, dawn
+    require("tokyonight").setup({
+      style = "night",  -- Options: night, storm, day, moon
+      transparent = true,
     })
-    vim.cmd("colorscheme rose-pine")
+    vim.cmd("colorscheme tokyonight")
   end,
 }
 ```
@@ -146,7 +146,7 @@ Edit `lua/core/set.lua`
 
 ### WezTerm (Recommended)
 
-Create `~/.wezterm.lua`:
+Create `~/.wezterm.lua` (on Windows: `%USERPROFILE%\.wezterm.lua`):
 
 ```lua
 local wezterm = require 'wezterm'
@@ -154,9 +154,11 @@ local wezterm = require 'wezterm'
 return {
   font = wezterm.font 'JetBrainsMono Nerd Font',
   font_size = 13.0,
-  color_scheme = 'Rose Pine',
-  window_background_opacity = 0.85,
-  text_background_opacity = 1.0,
+  color_scheme = 'Tokyo Night',
+  window_background_opacity = 0.8,
+  colors = {
+    background = '#00141a',
+  },
   enable_tab_bar = false,
   window_decorations = 'RESIZE',
 }
@@ -182,7 +184,7 @@ brew install --cask font-jetbrains-mono-nerd-font
 
 ### Transparency not working
 - Configure your terminal's opacity settings
-- Rose Pine is configured with `disable_background = true`
+- TokyoNight is configured with `transparent = true`
 
 ### LSP not working
 ```vim

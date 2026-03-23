@@ -12,6 +12,11 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", ";", ":")
 
+-- Clipboard with Ctrl
+vim.keymap.set('n', '<C-y>', '"+y', { desc = 'Copy to clipboard' })
+vim.keymap.set('n', '<C-p>', '"+p', { desc = 'Paste from clipboard' })
+vim.keymap.set('v', '<C-y>', '"+y', { desc = 'Copy selection to clipboard' })
+vim.keymap.set('i', '<C-p>', '<C-o>"+p', { desc = 'Paste from clipboard' })
 
 vim.api.nvim_set_keymap('n', ',cc', ':lua _G.comment_line("n")<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', ',cc', ':<C-u>lua _G.comment_line("v")<CR>', { noremap = true, silent = true })
@@ -20,12 +25,6 @@ vim.api.nvim_set_keymap('v', ',cu', ':<C-u>lua _G.uncomment_line("v")<CR>', { no
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
-
--- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
-
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
@@ -39,7 +38,10 @@ vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- LSP Rename (short)
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
+vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
+
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/core/plugins/init.lua<CR>");

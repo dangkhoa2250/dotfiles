@@ -1,15 +1,23 @@
 local wezterm = require 'wezterm'
 
+local function get_default_prog()
+  local sys = wezterm.system_detail()
+  if sys.os_name == 'macOS' then
+    return nil -- Use default shell on macOS
+  elseif sys.os_name == 'Windows' then
+    return { 'wsl.exe', '-d', 'Ubuntu' }
+  else
+    return nil -- Linux/WSL - use default shell
+  end
+end
+
 return {
   -- Font - Use JetBrains Mono for better icon support
   font = wezterm.font('JetBrains Mono'),
   font_size = 12.0,
 
-  -- Launch WSL Ubuntu (Oh My Posh will be loaded from .bashrc)
-  default_prog = {
-    'wsl.exe',
-    '-d', 'Ubuntu',
-  },
+  -- Launch WSL Ubuntu on Windows, default shell elsewhere
+  default_prog = get_default_prog(),
 
   colors = {
     background = '#00141a',

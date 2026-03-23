@@ -39,19 +39,19 @@ install_packages() {
       if command -v apt &> /dev/null; then
         echo "Installing dependencies with apt..."
         sudo apt update
-        sudo apt install -y git curl ripgrep fd-find build-essential
+        sudo apt install -y git curl ripgrep fd-find build-essential universal-ctags
       elif command -v dnf &> /dev/null; then
         echo "Installing dependencies with dnf..."
-        sudo dnf install -y git curl ripgrep fd-find make gcc gcc-c++
+        sudo dnf install -y git curl ripgrep fd-find make gcc gcc-c++ ctags
       elif command -v pacman &> /dev/null; then
         echo "Installing dependencies with pacman..."
-        sudo pacman -Syu --noconfirm git curl ripgrep fd base-devel
+        sudo pacman -Syu --noconfirm git curl ripgrep fd base-devel ctags
       fi
       ;;
     wsl)
       echo "Installing dependencies with apt (WSL)..."
       sudo apt update
-      sudo apt install -y git curl ripgrep fd-find build-essential
+      sudo apt install -y git curl ripgrep fd-find build-essential universal-ctags
       ;;
     mac)
       echo "Installing dependencies with Homebrew..."
@@ -60,7 +60,7 @@ install_packages() {
         echo "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
         exit 1
       fi
-      brew install git curl ripgrep fd
+      brew install git curl ripgrep fd universal-ctags
       ;;
   esac
 }

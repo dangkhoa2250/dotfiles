@@ -46,7 +46,7 @@ vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/core/plugins/init.
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
+    vim.cmd("source " .. vim.env.MYVIMRC)
 end)
 
 -- -- Nvim-tree mapping

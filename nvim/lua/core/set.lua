@@ -53,12 +53,12 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 -- Cross-platform shell
-if is_windows then
+if is_windows and not vim.env.WSL_DISTRO_NAME then
   vim.opt.shell = "powershell.exe"
-elseif is_mac then
-  vim.opt.shell = "zsh"
 else
   vim.opt.shell = "bash"
+  vim.opt.shellcmdflag = "-c"
+  vim.opt.shellxquote = ""
 end
 
 -- Windows-specific cabbrev (only if on Windows)

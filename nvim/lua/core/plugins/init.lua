@@ -7,7 +7,7 @@ return {
     priority = 1000,
     config = function()
       require("rose-pine").setup({
-        disable_background = true,  -- Transparent background
+        disable_background = true,  -- Enable transparency
         disable_float_background = true,
         styles = {
           bold = true,
@@ -16,6 +16,10 @@ return {
         },
       })
       vim.cmd("colorscheme rose-pine")
+      -- Set black transparent background
+      vim.api.nvim_set_hl(0, "Normal", { bg = "#050505", default = true })
+      vim.api.nvim_set_hl(0, "NormalNC", { bg = "#050505", default = true })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#050505", default = true })
     end,
   },
 
@@ -59,8 +63,32 @@ return {
           preview = {
             treesitter = false,
           },
+          file_ignore_patterns = {},
+          path_display = { "smart" },
         },
       })
+    end,
+  },
+
+  -- Tagbar
+  {
+    "preservim/tagbar",
+    cmd = "TagbarToggle",
+    keys = {
+      {
+        "<leader>t",
+        function()
+          vim.cmd("TagbarToggle")
+        end,
+        desc = "Toggle Tagbar",
+      },
+    },
+    init = function()
+      vim.g.tagbar_ctags_bin = "/usr/bin/ctags"
+      vim.g.tagbar_usearrows = 1
+      vim.g.tagbar_autoshowtag = 0
+      vim.g.tagbar_autofocus = 1
+      vim.g.tagbar_verbose = 0
     end,
   },
 
@@ -270,6 +298,21 @@ return {
       "rcarriga/nvim-notify",
     },
     config = function()
+      vim.notify = require("notify")
+      vim.notify.setup({
+        background_colour = "#000000",
+        stages = "fade_in_slide_out",
+        top_down = false,
+        timeout = 3000,
+        level = vim.log.levels.WARN, -- Only show WARN and ERROR
+      })
+
+      -- Set highlight colors for notify
+      vim.api.nvim_set_hl(0, "NotifyBackground", { bg = "#121214", default = true })
+      vim.api.nvim_set_hl(0, "NotifyINFO", { bg = "#121214", fg = "#50fa7b", default = true })
+      vim.api.nvim_set_hl(0, "NotifyWARN", { bg = "#121214", fg = "#f1fa8c", default = true })
+      vim.api.nvim_set_hl(0, "NotifyERROR", { bg = "#121214", fg = "#ff5555", default = true })
+
       require("noice").setup({
         lsp = {
           override = {
@@ -283,6 +326,27 @@ return {
           command_palette = true,
           long_message_to_split = true,
           inc_rename = true,
+        },
+        notify = {
+          enabled = true,
+          view = "notify",
+        },
+        routes = {
+          {
+            filter = {
+              event = "notify",
+              kind = nil,
+            },
+            opts = { position = "bottom-left" },
+          },
+          -- Filter Tagbar messages
+          {
+            filter = {
+              event = "msg_show",
+              find = "Tagbar",
+            },
+            opts = { skip = true },
+          },
         },
       })
     end,

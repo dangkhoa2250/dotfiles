@@ -8,11 +8,12 @@ return {
   -- Launch WSL Ubuntu (Oh My Posh will be loaded from .bashrc)
   default_prog = {
     'wsl.exe',
-    '-d', 'Ubuntu'
+    '-d', 'Ubuntu',
   },
 
-  -- Color scheme - Dracula
-  color_scheme = 'Dracula',
+  colors = {
+    background = '#00141a',
+  },
 
   -- Window
   window_padding = {
@@ -54,4 +55,5 @@ return {
   -- Misc
   adjust_window_size_when_changing_font_size = false,
   hide_tab_bar_if_only_one_tab = false,
+  window_close_confirmation = 'NeverPrompt',
 }

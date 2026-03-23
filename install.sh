@@ -41,12 +41,13 @@ show_usage() {
   echo "  tmux       - Tmux configuration"
   echo "  wezterm    - WezTerm configuration"
   echo "  oh-my-posh - Oh My Posh themes"
-  echo "  all        - Install everything (default)"
+  echo "  all        - Install everything"
+  echo "  help       - Show this help"
   echo ""
   echo "Examples:"
-  echo "  $0          # Install all"
-  echo "  $0 nvim     # Install only Neovim"
-  echo "  $0 tmux     # Install only Tmux"
+  echo "  $0              # Interactive menu"
+  echo "  $0 nvim         # Install only Neovim"
+  echo "  $0 all          # Install all"
   echo ""
 }
 
@@ -142,9 +143,8 @@ install_oh_my_posh() {
   
   echo "✓ Oh My Posh installed"
   echo ""
-  echo "Add to your shell config:"
-  echo "  macOS: oh-my-posh init pwsh --config ~/.poshthemes/posh-macos.omp.json | Invoke-Expression"
-  echo "  WSL:   oh-my-posh init bash --config ~/.poshthemes/posh-wsl.omp.json | Invoke-Expression"
+  echo "Add to your shell config (bash):"
+  echo "  echo 'eval \"\$(oh-my-posh init bash --config ~/.poshthemes/posh-macos.omp.json)\"' >> ~/.bashrc"
   echo ""
 }
 
@@ -156,35 +156,78 @@ install_all() {
   install_oh_my_posh
 }
 
-# Main
-APP="${1:-all}"
+# Interactive menu
+interactive_menu() {
+  echo "What would you like to install?"
+  echo ""
+  echo "  1) Neovim"
+  echo "  2) Tmux"
+  echo "  3) WezTerm"
+  echo "  4) Oh My Posh"
+  echo "  5) All of the above"
+  echo "  6) Quit"
+  echo ""
 
-case "$APP" in
-  nvim)
-    install_nvim
-    ;;
-  tmux)
-    install_tmux
-    ;;
-  wezterm)
-    install_wezterm
-    ;;
-  oh-my-posh)
-    install_oh_my_posh
-    ;;
-  all)
-    install_all
-    ;;
-  help|--help|-h)
-    show_usage
-    ;;
-  *)
-    echo "Unknown application: $APP"
-    echo ""
-    show_usage
-    exit 1
-    ;;
-esac
+  local choices=""
+  while true; do
+    read -p "Enter your choice (1-6): " choice
+    case "$choice" in
+      1) choices="nvim"; break ;;
+      2) choices="tmux"; break ;;
+      3) choices="wezterm"; break ;;
+      4) choices="oh-my-posh"; break ;;
+      5) choices="all"; break ;;
+      6) echo "Exiting..."; exit 0 ;;
+      *) echo "Invalid choice. Please enter 1-6." ;;
+    esac
+  done
+
+  echo ""
+
+  case "$choices" in
+    nvim) install_nvim ;;
+    tmux) install_tmux ;;
+    wezterm) install_wezterm ;;
+    oh-my-posh) install_oh_my_posh ;;
+    all) install_all ;;
+  esac
+}
+
+# Main
+APP="${1:-}"
+
+if [ -z "$APP" ]; then
+  # No argument - interactive mode
+  interactive_menu
+else
+  # Argument provided - use it
+  case "$APP" in
+    nvim)
+      install_nvim
+      ;;
+    tmux)
+      install_tmux
+      ;;
+    wezterm)
+      install_wezterm
+      ;;
+    oh-my-posh)
+      install_oh_my_posh
+      ;;
+    all)
+      install_all
+      ;;
+    help|--help|-h)
+      show_usage
+      ;;
+    *)
+      echo "Unknown application: $APP"
+      echo ""
+      show_usage
+      exit 1
+      ;;
+  esac
+fi
 
 echo "========================================="
 echo "  Installation Complete!"

@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 
 local function get_default_prog()
-  local target = wezterm.target_triple()
+  local target = wezterm.target_triple
   if target:find("apple") then
     return nil -- Use default shell on macOS
   elseif target:find("windows") then
@@ -14,7 +14,7 @@ end
 return {
   -- Font - Use JetBrains Mono for better icon support
   font = wezterm.font('JetBrains Mono'),
-  font_size = 12.0,
+  font_size = 14.0,
 
   -- Launch WSL Ubuntu on Windows, default shell elsewhere
   default_prog = get_default_prog(),
@@ -25,16 +25,16 @@ return {
 
   -- Window
   window_padding = {
-    left = 10,
-    right = 10,
-    top = 10,
-    bottom = 10,
+    left = 8,
+    right = 8,
+    top = 8,
+    bottom = 8,
   },
   window_background_opacity = 0.9,
   window_decorations = 'NONE',
   window_frame = {
     font = wezterm.font('JetBrains Mono', { weight = 'Bold' }),
-    font_size = 12.0,
+    font_size = 14.0,
     inactive_titlebar_bg = '#000d1a',
     active_titlebar_bg = '#000d1a',
     inactive_titlebar_fg = '#21c7c7',

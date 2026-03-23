@@ -123,3 +123,23 @@ fi
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 set -o vi
+
+# Prompt - cross-platform
+case "$(uname -s)" in
+  Linux*)
+    # Linux: use Oh My Posh
+    if command -v oh-my-posh &> /dev/null; then
+      eval "$(oh-my-posh init bash --config ~/.poshthemes/posh-macos.omp.json)"
+    else
+      PS1='\u@\h:\w\$ '
+    fi
+    ;;
+  Darwin*)
+    # macOS: use Oh My Posh with simple theme
+    if command -v oh-my-posh &> /dev/null; then
+      eval "$(oh-my-posh init bash --config ~/.poshthemes/posh-macos-simple.omp.json)"
+    else
+      PS1='\u@\h:\w\$ '
+    fi
+    ;;
+esac

@@ -46,7 +46,7 @@ case "$(uname -s)" in
   Linux*)
     # Linux: use Oh My Posh
     if command -v oh-my-posh &> /dev/null; then
-      eval "$(oh-my-posh init zsh --config ~/.poshthemes/posh-macos.omp.json)"
+      eval "$(oh-my-posh init zsh --config ~/.poshthemes/posh-macos-simple.omp.json)"
     else
       PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
     fi

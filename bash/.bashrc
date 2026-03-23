@@ -127,9 +127,9 @@ set -o vi
 # Prompt - cross-platform
 case "$(uname -s)" in
   Linux*)
-    # Linux: use Oh My Posh
+    # Linux: use Oh My Posh with simple theme
     if command -v oh-my-posh &> /dev/null; then
-      eval "$(oh-my-posh init bash --config ~/.poshthemes/posh-macos.omp.json)"
+      eval "$(oh-my-posh init bash --config ~/.poshthemes/posh-macos-simple.omp.json)"
     else
       PS1='\u@\h:\w\$ '
     fi

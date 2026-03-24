@@ -80,11 +80,16 @@ return {
           winblend = 0,
           mappings = {
             i = {
-              ["<C-p>"] = actions.toggle_preview,
+              ["<C-p>"] = actions.preview_scrolling_up,
             },
             n = {
-              ["p"] = actions.toggle_preview,
+              ["p"] = actions.preview_scrolling_up,
             },
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
           },
         },
       })
@@ -252,7 +257,7 @@ return {
     event = "BufReadPre",
     config = function()
       require("cloak").setup({
-        enabled = true,
+        enabled = false,
         cloak_character = "*",
         highlight_group = "Comment",
         patterns = {

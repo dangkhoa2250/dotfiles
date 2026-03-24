@@ -122,6 +122,15 @@ fi
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+alias ba='nvim ~/.bashrc'
+alias n='nvim'
+alias pa='cd ~/project/proposals-agent/'
+alias nv='cd ~/.config/nvim/'
+alias sba='source ~/.bashrc'
+alias q='qwen'
+alias ge='gemini'
+alias cl='claude'
+alias khoa='cd /mnt/c/Users/KhoaTTD3/'
 set -o vi
 
 # Add ~/bin to PATH (MUST be before oh-my-posh)

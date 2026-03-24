@@ -240,6 +240,12 @@ return {
   -- Cellular Automaton
   { "eandrju/cellular-automaton.nvim", cmd = "CellularAutomaton" },
 
+  -- Tmux Navigator (seamless Ctrl+hjkl navigation between tmux and vim)
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
+
   -- Cloak
   {
     "laytan/cloak.nvim",

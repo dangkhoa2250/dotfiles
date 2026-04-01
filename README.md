@@ -6,6 +6,24 @@ My personal configuration for various development tools and terminal application
 
 This repository contains all my configuration files for setting up a productive development environment across multiple machines (macOS, Linux, WSL).
 
+## 📦 Scripts
+
+### bin/on - Create Obsidian Note
+```bash
+# Create new note in vault
+on my_new_note
+```
+
+### Setup Bin Scripts
+```bash
+# Create symlink to ~/bin
+mkdir -p ~/bin
+ln -sf ~/.dotfiles/bin/on ~/bin/on
+
+# Add to PATH in ~/.zshrc or ~/.bashrc
+export PATH="$HOME/bin:$PATH"
+```
+
 ## 📦 Applications
 
 | Application | Description | Config Path |
@@ -45,6 +63,8 @@ cd ~/.dotfiles
 
 ```
 dotfiles/
+├── bin/               # Custom scripts
+│   └── on             # Create obsidian note
 ├── nvim/              # Neovim configuration
 │   ├── init.lua
 │   ├── lua/

@@ -41,6 +41,7 @@ show_usage() {
   echo "Usage: $0 [app]"
   echo ""
   echo "Available apps:"
+  echo "  bin        - Custom scripts (bin/on)"
   echo "  bash       - Bash configuration"
   echo "  zsh        - Zsh configuration"
   echo "  nvim       - Neovim configuration"
@@ -227,6 +228,28 @@ install_oh_my_posh() {
   echo ""
 }
 
+# Install Bin Scripts
+install_bin() {
+  echo "========================================="
+  echo "  Installing Bin Scripts"
+  echo "========================================="
+
+  local BIN_DIR="$HOME/bin"
+  local SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+  # Create ~/bin if not exists
+  mkdir -p "$BIN_DIR"
+
+  # Symlink scripts
+  if [ -f "$SCRIPT_DIR/bin/on" ]; then
+    ln -sf "$SCRIPT_DIR/bin/on" "$BIN_DIR/on"
+    echo "Symlinked: $BIN_DIR/on"
+  fi
+
+  echo "✓ Bin scripts installed"
+  echo ""
+}
+
 # Install Bash
 install_bash() {
   echo "========================================="
@@ -275,6 +298,7 @@ install_zsh() {
 
 # Install all
 install_all() {
+  install_bin
   install_bash
   install_zsh
   install_nvim
@@ -287,35 +311,38 @@ install_all() {
 interactive_menu() {
   echo "What would you like to install?"
   echo ""
-  echo "  1) Bash"
-  echo "  2) Zsh"
-  echo "  3) Neovim"
-  echo "  4) Tmux"
-  echo "  5) WezTerm"
-  echo "  6) Oh My Posh"
-  echo "  7) All of the above"
-  echo "  8) Quit"
+  echo "  1) Bin Scripts"
+  echo "  2) Bash"
+  echo "  3) Zsh"
+  echo "  4) Neovim"
+  echo "  5) Tmux"
+  echo "  6) WezTerm"
+  echo "  7) Oh My Posh"
+  echo "  8) All of the above"
+  echo "  9) Quit"
   echo ""
 
   local choices=""
   while true; do
-    read -p "Enter your choice (1-8): " choice
+    read -p "Enter your choice (1-9): " choice
     case "$choice" in
-      1) choices="bash"; break ;;
-      2) choices="zsh"; break ;;
-      3) choices="nvim"; break ;;
-      4) choices="tmux"; break ;;
-      5) choices="wezterm"; break ;;
-      6) choices="oh-my-posh"; break ;;
-      7) choices="all"; break ;;
-      8) echo "Exiting..."; exit 0 ;;
-      *) echo "Invalid choice. Please enter 1-8." ;;
+      1) choices="bin"; break ;;
+      2) choices="bash"; break ;;
+      3) choices="zsh"; break ;;
+      4) choices="nvim"; break ;;
+      5) choices="tmux"; break ;;
+      6) choices="wezterm"; break ;;
+      7) choices="oh-my-posh"; break ;;
+      8) choices="all"; break ;;
+      9) echo "Exiting..."; exit 0 ;;
+      *) echo "Invalid choice. Please enter 1-9." ;;
     esac
   done
 
   echo ""
 
   case "$choices" in
+    bin) install_bin ;;
     bash) install_bash ;;
     zsh) install_zsh ;;
     nvim) install_nvim ;;
@@ -335,6 +362,9 @@ if [ -z "$APP" ]; then
 else
   # Argument provided - use it
   case "$APP" in
+    bin)
+      install_bin
+      ;;
     bash)
       install_bash
       ;;

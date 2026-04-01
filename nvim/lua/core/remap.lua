@@ -71,6 +71,9 @@ vim.keymap.set("n", "<leader>od", function()
   print("Da xoa note: " .. vim.fn.expand("%:t"))
 end, { desc = "Delete Note" })
 
+-- Cloak toggle (hien/an gia tri .env)
+vim.keymap.set("n", "<leader>ck", ":CloakToggle<CR>", { desc = "Toggle Cloak" })
+
 -- -- Nvim-tree mapping
 -- vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 -- Define comment leaders based on file types

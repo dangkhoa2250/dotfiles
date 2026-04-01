@@ -54,6 +54,14 @@ vim.opt.colorcolumn = "80"
 -- Conceal level for Obsidian markdown preview
 vim.opt.conceallevel = 1
 
+-- Show .env values (disable conceal for env files)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "env",
+  callback = function()
+    vim.opt_local.conceallevel = 0
+  end,
+})
+
 -- Cross-platform shell
 if is_windows and not vim.env.WSL_DISTRO_NAME then
   vim.opt.shell = "powershell.exe"

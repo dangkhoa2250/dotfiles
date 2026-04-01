@@ -141,6 +141,19 @@ function M.setup()
     on_attach = on_attach,
   })
 
+  vim.lsp.config("pylsp", {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+      pylsp = {
+        plugins = {
+          pycodestyle = { enabled = false },
+          flake8 = { enabled = false },
+        }
+      }
+    }
+  })
+
   -- Diagnostic config with virtual text
   vim.diagnostic.config({
     virtual_text = {

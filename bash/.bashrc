@@ -162,3 +162,5 @@ case "$(uname -s)" in
     fi
     ;;
 esac
+
+. "$HOME/.local/bin/env"

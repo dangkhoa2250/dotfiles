@@ -51,6 +51,9 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
+-- Conceal level for Obsidian markdown preview
+vim.opt.conceallevel = 1
+
 -- Cross-platform shell
 if is_windows and not vim.env.WSL_DISTRO_NAME then
   vim.opt.shell = "powershell.exe"

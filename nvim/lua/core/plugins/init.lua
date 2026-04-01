@@ -251,6 +251,54 @@ return {
     lazy = false,
   },
 
+  -- Obsidian
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("obsidian").setup({
+        -- Danh sach workspaces - tu dong detect dua tren .obsidian folder
+        workspaces = {
+          {
+            name = "Obsidian Vault",
+            path = "~/Onedrive/Obsidian/Obsidian Vault",
+          },
+          {
+            name = "SelfAI Vault",
+            path = "~/Onedrive/Obsidian/SelfAI Vault",
+          },
+          {
+            name = "Proposal Agent",
+            path = "~/Onedrive/Obsidian/Proposal Agent",
+          },
+        },
+
+        -- Cau hinh mac dinh
+        notes_subdir = "gomi",
+        use_advanced_uri = true,
+        follow_url_on_open = false,
+        attachments = {
+          img_folder = "assets/imgs",
+        },
+
+        -- Templates
+        templates = {
+          folder = "templates",
+        },
+
+        -- Disable default keymaps (we use our own in remap.lua)
+        ui = {
+          enable = true,
+        },
+      })
+    end,
+  },
+
   -- Cloak
   {
     "laytan/cloak.nvim",

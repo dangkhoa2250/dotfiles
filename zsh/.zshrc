@@ -13,6 +13,9 @@ setopt SHARE_HISTORY
 # Fix Vietnamese IME input for claude code
 export NODE_READLINE_TYPE="generic"
 
+# Add ~/bin to PATH
+export PATH="$HOME/bin:$PATH"
+
 # Terminal title
 case "$TERM" in
 xterm*|rxvt*)
@@ -29,7 +32,15 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias c='clear'
-
+alias pa='cd ~/project/FA.ACE-Proposal-Agent'
+alias nv='cd ~/.config/nvim'
+alias sba='source ~/.zshrc'
+alias n='nvim'
+alias ba='nvim ~/.zshrc'
+alias dt='ssh deepthink@100.77.11.124'
+alias q='qwen'
+alias oo='cd ~/Onedrive/Obsidian/Obsidian\ Vault'
+alias og='nvim ~/Onedrive/Obsidian/Obsidian\ Vault/gomi'
 # completion
 autoload -Uz compinit
 compinit
@@ -60,3 +71,5 @@ case "$(uname -s)" in
     fi
     ;;
 esac
+
+. "$HOME/.local/bin/env"

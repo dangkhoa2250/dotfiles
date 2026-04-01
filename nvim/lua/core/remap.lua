@@ -51,6 +51,26 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("source " .. vim.env.MYVIMRC)
 end)
 
+-- Obsidian Workflows
+vim.keymap.set("n", "<leader>on", ":ObsidianTemplate<CR>", { desc = "Insert Obsidian Template" })
+
+vim.keymap.set("n", "<leader>ok", function()
+  local current_file = vim.fn.expand("%:p")
+  local vault_path = "~/Onedrive/Obsidian/Obsidian Vault"
+  local zettelkasten_dir = vault_path .. "/notes/"
+
+  vim.fn.system("mv '" .. current_file .. "' '" .. zettelkasten_dir .. "'")
+  vim.cmd("bd")
+  print("Da luu vao notes: " .. vim.fn.expand("%:t"))
+end, { desc = "Keep Note (Move to notes)" })
+
+vim.keymap.set("n", "<leader>od", function()
+  local current_file = vim.fn.expand("%:p")
+  vim.fn.system("rm '" .. current_file .. "'")
+  vim.cmd("bd")
+  print("Da xoa note: " .. vim.fn.expand("%:t"))
+end, { desc = "Delete Note" })
+
 -- -- Nvim-tree mapping
 -- vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 -- Define comment leaders based on file types

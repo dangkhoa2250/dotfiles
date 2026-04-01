@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Error: Please input file name Ex: on my_new_note"
+  exit 1
+fi
+
+FILE_NAME="$1.md"
+VAULT_PATH="$HOME/Onedrive/Obsidian/Obsidian Vault"
+INBOX_PATH="$VAULT_PATH/gomi"
+
+touch "$INBOX_PATH/$FILE_NAME"
+nvim "$INBOX_PATH/$FILE_NAME"

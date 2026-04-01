@@ -166,6 +166,13 @@ return {
           ["<C-y>"] = cmp.mapping.confirm({ select = true }),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.confirm({ select = true })
+            else
+              fallback()
+            end
+          end),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -289,6 +296,8 @@ return {
         -- Templates
         templates = {
           folder = "templates",
+          date_format = "%Y-%m-%d-%a",
+          time_format = "%H:%M",
         },
 
         -- Disable default keymaps (we use our own in remap.lua)
